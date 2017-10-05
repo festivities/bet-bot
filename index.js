@@ -1,9 +1,10 @@
-var http, director, cool, bot, router, server, port;
 
-http        = require('http');
-director    = require('director');
-cool        = require('cool-ascii-faces');
-bot         = require('./bot.js');
+var http = require('http');
+var director = require('director');
+var cool = require('cool-ascii-faces');
+var bot = require('./bot.js');
+var express = require('express');
+var app = express();
 
 router = new director.http.Router({
   '/' : {
@@ -31,3 +32,11 @@ function ping() {
   this.res.writeHead(200);
   this.res.end("Hey, I am a cool Guy.");
 }
+
+app.get('/times', function(request, response) {
+    var result = ''
+    var times = process.env.TIMES || 5
+    for (i=0; i < times; i++)
+      result += i + ' ';
+  response.send(result);
+});
